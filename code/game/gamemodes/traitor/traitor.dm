@@ -22,7 +22,7 @@
 
 /datum/game_mode/traitor/announce()
 	world << "<B>The current game mode is - Traitor!</B>"
-	world << "<B>There are syndicate traitors on the station. Do not let the traitors succeed!</B>"
+	world << "<B>There are Enclave traitors in the Vault. Do not let the traitors succeed!</B>"
 
 
 /datum/game_mode/traitor/pre_setup()
@@ -214,7 +214,7 @@
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
 
 /proc/give_codewords(mob/living/traitor_mob)
-	traitor_mob << "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>"
+	traitor_mob << "<U><B>The Enclave provided you with the following information on how to identify their agents:</B></U>"
 	traitor_mob << "<B>Code Phrase</B>: <span class='danger'>[syndicate_code_phrase]</span>"
 	traitor_mob << "<B>Code Response</B>: <span class='danger'>[syndicate_code_response]</span>"
 
@@ -231,7 +231,7 @@
 	killer.set_zeroth_law(law, law_borg)
 	give_codewords(killer)
 	killer.set_syndie_radio()
-	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
+	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Enclave Agents!"
 	killer.add_malf_picker()
 	killer.show_laws()
 
@@ -310,7 +310,7 @@
 		I = locate(/obj/item/device/radio) in traitor_mob.contents
 
 	if (!I)
-		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you a radio."
+		traitor_mob << "Unfortunately, the Enclave wasn't able to get you a radio."
 		. = 0
 	else
 		var/obj/item/device/uplink/U = new(I)
@@ -321,13 +321,13 @@
 			var/obj/item/device/radio/R = I
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
-			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features."
+			traitor_mob << "The Enclave have cunningly disguised an Enclave Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name] [loc]).")
 		else if(istype(I, /obj/item/device/pda))
 			var/obj/item/device/pda/P = I
 			P.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
 
-			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[P.lock_code]\" into the ringtone select to unlock its hidden features."
+			traitor_mob << "The Enclave have cunningly disguised an Enclave Uplink as your [P.name] [loc]. Simply enter the code \"[P.lock_code]\" into the ringtone select to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [P.lock_code] ([P.name] [loc]).")
 	if(!safety) // If they are not a rev. Can be added on to.
 		give_codewords(traitor_mob)
@@ -371,5 +371,5 @@
 	var/equipped_slot = mob.equip_in_one_of_slots(folder, slots)
 	if (equipped_slot)
 		where = "In your [equipped_slot]"
-	mob << "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>"
+	mob << "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Enclave group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>"
 	mob.update_icons()
